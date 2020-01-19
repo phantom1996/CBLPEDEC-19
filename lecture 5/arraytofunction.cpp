@@ -18,6 +18,7 @@ int main()
 		cout<<a[i]<<" ";
 	}
 	cout<<endl;
+	int x=sizeof(a)/sizeof(int);
 	int n=5;
 	cout<<arraysum(a,n);
 	
