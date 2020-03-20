@@ -98,18 +98,74 @@ int daimeter(node* root){
 	return max(op1,max(op2,op3));
 }
 
+void mirroriverse(node* &root){
+	//ase cositio
+	if(root==NULL){
+		return;
+	}
+	if(root->left==NULL && root->right==NULL){
+		return;
+	}
+	/*if(root->left==NULL && root->right!=NULL){
+		root->left=root->right;
+		root->right=NULL;
+		return;
+	}
+	if(root->left!=NULL && root->right==NULL){
+		root->right=root->left;
+		root->left=NULL;
+		return;
+	}*/	
+	swap(root->left,root->right);
+	mirroriverse(root->left);
+	mirroriverse(root->right);
+}
+#include<queue>
+node* levelorderinput(){
+	queue<node* >q;
+	int data;
+	cin>>data;
+	node* root=new node(data);
+	q.push(root);
+	while(!q.empty()){
+		node* temp=q.front();
+		q.pop();
+		//left
+		cout<<"Enter data of left child of "<<temp->data<<" ";
+		cin>>data;
+		if(data!=-1){
+			//left node bna to le
+			temp->left=new node(data);
+			q.push(temp->left);
+		}
+
+		//right
+		cout<<"Enter data of right child of "<<temp->data<<" ";
+		cin>>data;
+		if(data!=-1){
+			temp->right=new node(data);
+			q.push(temp->right);
+		}
+	}
+	return root;
+}
+
 int main()
 {
-	node* root=create_tree();
+	node *root=levelorderinput();
+	//node* root=create_tree();
 	// printpostorder(root);
 	// cout<<endl;
 	// printinorder(root);
 	// cout<<endl;
-	// printpreorder(root);
+	 printpreorder(root);
+	 //mirroriverse(root);
+	 //cout<<endl;
+	 //printpreorder(root);
 	// cntNodes(root);
 	// cout<<endl<<countnode<<endl;
 	// int h=height(root);
 	// cout<<h<<endl;
-	cout<<daimeter(root);
+	//cout<<daimeter(root);
 	return 0;
 }
