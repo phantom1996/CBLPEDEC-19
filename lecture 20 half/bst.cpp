@@ -15,6 +15,7 @@ public:
 		right=NULL;
 	}
 };
+#include<queue>
 void levelorderprint(node *root){
 	queue<node* >q;
 	q.push(root);
@@ -66,11 +67,103 @@ node* createBST(){
 	return root;
 
 }
+
+node* searchintobst(node* root,int key){
+	if(root==NULL){
+		return NULL;
+	}
+	else if(root->data==key){
+		return root;
+	}
+	else if(key>root->data){
+		searchintobst(root->right,key);
+	}
+	else{
+		searchintobst(root->left,key);
+	}
+
+}
+
+#include<climits>
+bool is_BST(node* root,int mini=INT_MIN,int maxi=INT_MAX){
+	if(root==NULL){
+		return true;
+	}
+
+	if(root->data>=mini && root->data<=maxi && is_BST(root->left,mini,root->data) && is_BST(root->right,root->data,maxi)){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+node* ArraytoBST(node* root,int *a,int s,int e){
+
+	//base case
+	if(s>e){
+		return NULL;
+	}
+	int mid=(s+e)/2;
+
+	root=new node(a[mid]);
+	root->left=ArraytoBST(root->left,a,s,mid-1);
+	root->right=ArraytoBST(root->right,a,mid+1,e);
+	return root;
+
+}
+ int  height(node* root){
+ 	//base consition
+ 	if(root==NULL){
+ 		return 0;
+ 	}
+ 	int leftkihight=height(root->left)+1;
+ 	int rightkihight=height(root->right)+1;
+ 	int ans=max(leftkihight,rightkihight);
+ 	return ans;
+ }
+#include<cmath>
+bool is_balance(node* root){
+	if(root==NULL){
+		return true;
+	}
+	if(abs(height(root->left)-height(root->right))<=1 && is_balance(root->left) && is_balance(root->right)){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 int main()
 {
+	// int n;cin>>n;
+	// int a[100];
+	// for(int i=0;i<n;i++){
+	// 	cin>>a[i];
+	// }
+	//node *root=ArraytoBST(root,a,0,n-1);
 	node* root=createBST();
-	printinorder(root);
-	cout<<endl<<endl;
-	levelorderprint(root);
+	cout<<boolalpha<<is_balance(root)<<endl;
+	// levelorderprint(root);
+	//node* root=createBST();
+	// int key;
+	// cin>>key;
+	// node* ans=searchintobst(root,key);
+	// if(ans==NULL){
+	// 	cout<<"Key NOT FOUNd"<<endl;
+	// }
+	// else{
+	// 	cout<<"key Found "<<ans->data<<endl;
+	// }
+	// bool istrue=is_BST(root);
+	// if(istrue){
+	// 	cout<<"BST";
+	// }
+	// else{
+	// 	cout<<"NOT BST";
+	// }
+//	printinorder(root);
+//	cout<<endl<<endl;
+//	levelorderprint(root);
 	return 0;
 }
+
