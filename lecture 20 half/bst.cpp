@@ -133,6 +133,73 @@ bool is_balance(node* root){
 		return false;
 	}
 }
+
+
+node* Findminimumfromright(node* root){
+	//
+	if(root==NULL){
+		return NULL;
+	}
+	//search in the left tree;
+	//homework
+
+
+
+
+}
+
+node* Delete(node* root,int data){
+	//ase case
+	if(root==NULL){
+		return NULL;
+	}
+
+	else if(data<root->data){
+		root->left=Delete(root->left,data);
+	}
+	else if(data>root->data){
+		root->right=Delete(root->right,data);
+	}
+	else{
+		//1st case no child'
+		if(root->left==NULL && root->right==NULL){
+			delete root;
+			root=NULL;
+			return root;
+		}
+
+		//1 child
+
+		else if(root->left==NULL){
+			node* temp=root;
+			root=root->right //mapping the address
+			delete temp;
+			return root;
+
+		}
+		else if(root->right==NULL){
+			node* temp=root;
+			root=root->left //mapping the address
+			delete temp;
+			return root;
+
+		}
+
+		//2 child
+		else{
+			node* rightmin=Findminimumfromright(root->right);
+			root->data=rightmin->data;
+			root->right=Delete(root->right,data);
+		}
+
+
+
+
+	}
+
+
+}
+
 int main()
 {
 	// int n;cin>>n;
