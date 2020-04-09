@@ -42,6 +42,27 @@ return ans;
 }
 
 
+int  bottomup(int *coins,int n,int amount,int *dp){
+
+	/*int dp[1000];
+	for(int i=0;i<=1000;i++){
+		dp[i]=INT_MAX;
+	}*/
+	dp[0]=0;
+
+	for(int rupay=1;rupay<=amount;rupay++){
+		for(int i=0;i<n;i++){
+			if(rupay-coins[i]>=0){
+				dp[rupay]=min(dp[rupay],dp[rupay-coins[i]]+1);
+			}
+		}
+	}
+
+	return dp[amount];
+
+}
+
+
 
 int main()
 {
@@ -52,10 +73,12 @@ int main()
 	cin>>amount;
 	int dp[1000];
 	for(int i=0;i<1000;i++){
-		dp[i]=-1;
+		dp[i]=INT_MAX;
 	}
-	cout<<topdown(coins,n,amount,dp);
-
+	cout<<bottomup(coins,n,amount,dp)<<endl;
+	for(int i=0;i<=amount;i++){
+		cout<<dp[i]<<" ";
+	}
 	
 	return 0;
 }
