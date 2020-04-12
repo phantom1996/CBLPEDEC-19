@@ -20,9 +20,41 @@ int Knapsack(int *price,int *weight,int n,int capacity,int dp[][100]){
 
 	dp[n][capacity]=max(inc,exc);
 	return max(inc,exc);
-
 }
 
+
+
+
+int bottomup(int *price,int *weight,int N,int capacity ){
+
+
+	int dp[100][100]={0};
+
+	for(int n=0;n<=N;n++){
+		for(int w=0;w<=capacity;w++){
+			if(n==0 || w==0){
+				dp[n][w]=0;
+			}
+			else{
+				int inc=0,exc=0;
+				if(w>=weight[n-1]){
+					inc=price[n-1] + dp[n-1][w-weight[n-1]];
+				}
+				exc= 0 + dp[n-1][w];
+
+				dp[n][w]=max(inc,exc);
+			}
+		}
+	}
+	for(int i=0;i<=N;i++){
+		for(int j=0;j<=capacity;j++){
+			cout<<dp[i][j]<<" ";
+		}
+		cout<<endl;
+	}
+
+	return dp[N][capacity];
+}
 
 int main()
 {
@@ -37,12 +69,14 @@ int main()
 		}
 	}
 	int n=sizeof(price)/sizeof(int);
-	cout<<Knapsack(price,weight,n,capacity,dp)<<endl;
+	cout<<endl;
+	cout<<bottomup(price,weight,n,capacity);
+	/*cout<<Knapsack(price,weight,n,capacity,dp)<<endl;
 	for(int i=0;i<=n;i++){
 		for(int j=0;j<=capacity;j++){
 			cout<<dp[i][j]<<" ";
 		}
 		cout<<endl;
-	}
+	}*/
 	return 0;
 }
