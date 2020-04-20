@@ -125,6 +125,7 @@ public:
 	 		if(t->key==key1){
 	 			return t->value;
 	 		}
+	 		t=t->next;
 	 	}
 	 	return -1;
 	 }
